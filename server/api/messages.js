@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const {User, Contact} = require('../db/models')
 require('../../secrets')
+const {Op} = require('sequelize')
 
 const authToken = process.env.TwilioAuthToken
 const accountSid = process.env.TwilioAccountSid
@@ -14,6 +15,24 @@ function anonymous(location) {
       to: '+16035627796'
     })
     .then(message => console.log(message.sid))
+}
+let t = true
+while (t) {
+  // get time
+  let past = Date.now()
+  past.setMinutes(past.getMinutes() - 10)
+
+  alert.findAll({
+    where: {
+      status: pending,
+      createdAt: {[Op.lte]: past}
+    }
+  })
+
+  // query database for pending entries with timestamp <= current time - 10 mins
+  // for each expired pending entry:
+  //   call triggerMessageSend
+  // sleep 1 min
 }
 
 function triggerMessageSend(userID, location) {

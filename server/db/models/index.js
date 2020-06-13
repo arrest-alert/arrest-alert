@@ -1,5 +1,6 @@
 const User = require('./user')
 const Contact = require('./contact')
+const Alert = require('./alerts')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -9,6 +10,7 @@ const Contact = require('./contact')
  */
 
 User.hasMany(Contact)
+User.hasMany(Alert)
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
@@ -18,5 +20,6 @@ User.hasMany(Contact)
  */
 module.exports = {
   User,
-  Contact
+  Contact,
+  Alert
 }
