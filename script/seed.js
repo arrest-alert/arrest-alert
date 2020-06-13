@@ -1,18 +1,65 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {User, Contact} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
   const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+    User.create({
+      email: 'cody@email.com',
+      password: '123',
+      fullName: 'Cody Smith'
+    }),
+    User.create({
+      email: 'murphy@email.com',
+      password: '123',
+      fullName: 'Murphy Slythers'
+    })
   ])
 
+  const contact = await Promise.all([
+    Contact.create({
+      number: '+16035627796',
+      contactName: 'Lainey',
+      userId: 1,
+      message: "Hey Lainey, this is Cody Tester. I'm in jail, please come help!"
+    }),
+    Contact.create({
+      number: '+19785906111',
+      contactName: 'Michelle',
+      userId: 1,
+      message:
+        "Hey Michelle, this is Cody Tester. I'm in jail, please come help!"
+    }),
+    Contact.create({
+      number: '+12126040450',
+      contactName: 'Cynthia',
+      userId: 1,
+      message:
+        "Hey Cynthia, this is Cody Tester. I'm in jail, please come help!"
+    })
+  ])
+
+  // const contact1 = await Contact.findOne({
+  //   where: {
+  //     contactName: 'Lainey'
+  //   }
+  // })
+
+  // const contact2 = await Contact.findOne({
+  //   where: {
+  //     contactName: 'Michelle'
+  //   }
+  // })
+
+  // await contact1.addUser("Cody Smith")
+  // await contact2.addUser("Cody Smith")
+
   console.log(`seeded ${users.length} users`)
+  console.log(`seeded ${contact.length} contacts`)
   console.log(`seeded successfully`)
 }
 

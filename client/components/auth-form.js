@@ -13,6 +13,12 @@ const AuthForm = props => {
     <div>
       <form onSubmit={handleSubmit} name={name}>
         <div>
+          <label htmlFor="fullName">
+            <small>Name</small>
+          </label>
+          <input name="fullName" type="text" />
+        </div>
+        <div>
           <label htmlFor="email">
             <small>Email</small>
           </label>
@@ -64,7 +70,8 @@ const mapDispatch = dispatch => {
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
-      dispatch(auth(email, password, formName))
+      const fullName = evt.target.fullName.value
+      dispatch(auth(email, password, fullName, formName))
     }
   }
 }
