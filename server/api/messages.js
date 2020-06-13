@@ -1,4 +1,5 @@
-// const {FoodItem, User} = require('../db/models')
+const router = require('express').Router()
+const {User, Contact} = require('../db/models')
 require('../../secrets')
 
 const authToken = process.env.TwilioAuthToken
@@ -6,7 +7,7 @@ const accountSid = process.env.TwilioAccountSid
 const client = require('twilio')(accountSid, authToken)
 
 function anonymous(location) {
-  client.messages
+  return client.messages
     .create({
       body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
       from: '+12019285464',
@@ -16,11 +17,13 @@ function anonymous(location) {
 }
 
 function triggerMessageSend(userID, location) {
-  // get message from db
   // get contacts from db
   // append location to message
+  // append name to message
   // for each contact:
-  // call 'send' helper function
+  //    get message
+  //    get number
+  //    call 'send' helper function
 }
 
 // helper function to actually send the message
@@ -33,3 +36,5 @@ function send(to, body) {
     })
     .then(message => console.log(message.sid))
 }
+
+module.exports = router
