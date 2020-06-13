@@ -7,7 +7,8 @@ class CurrentLocation extends Component {
     this.state = {
       currentLatLng: {
         lat: 0,
-        lng: 0
+        lng: 0,
+        precints: []
       },
       isMarkerShown: false
     }
@@ -25,7 +26,7 @@ class CurrentLocation extends Component {
         })
       })
     } else {
-      error => console.log(error)
+      console.log('error:location not found')
     }
   }
 
@@ -58,7 +59,9 @@ class CurrentLocation extends Component {
     return (
       <div style={{width: '100vw', height: '100vh'}}>
         <WrapperMap
-          googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyASj7zn0ZFN0zPzzaO56qFYSmGgrZIWQ-I"
+          googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places/json?location=${this.state.currentLatLng.lat,this.state.currentLatLng.lng}&radius=1500&type=restaurant&keyword=cruise&key=AIzaSyASj7zn0ZFN0zPzzaO56qFYSmGgrZIWQ-I"
+          //googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyASj7zn0ZFN0zPzzaO56qFYSmGgrZIWQ-I"
+          //googleMapURL= {`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.currentLatLng.lat,this.state.currentLatLng.lng}&radius=1500&type=police&key=AIzaSyASj7zn0ZFN0zPzzaO56qFYSmGgrZIWQ-I`}
           loadingElement={<div style={{height: `100%`}} />}
           containerElement={<div style={{height: `400px`}} />}
           mapElement={<div style={{height: `100%`}} />}
