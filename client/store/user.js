@@ -37,6 +37,7 @@ export const me = () => async dispatch => {
   }
 }
 
+
 export const updateName = (userId, fullName) => async dispatch => {
   try {
     const res = await axios.put(`/api/users/${userId}`, fullName)
@@ -56,9 +57,10 @@ export const updateEmail = (userId, email) => async dispatch => {
 }
 
 export const auth = (email, password, fullName, method) => async dispatch => {
+
   let res
   try {
-    res = await axios.post(`/auth/${method}`, {email, password, fullName})
+    res = await axios.post(`/auth/${method}`, {email, password})
   } catch (authError) {
     return dispatch(getUser({error: authError}))
   }
