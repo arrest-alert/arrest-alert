@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getPoliceLocation} from '../store/police-locations'
 import {withScriptjs, withGoogleMap, GoogleMap, Marker} from 'react-google-maps'
+require('../../secrets')
 
 class CurrentLocation extends Component {
   constructor(props) {
@@ -9,12 +10,17 @@ class CurrentLocation extends Component {
     this.state = {
       currentLatLng: {
         lat: 0,
-        lng: 0,
-        precints: []
+        lng: 0
       },
-      isMarkerShown: false
+      isMarkerShown: false,
+      precincts: []
     }
   }
+
+  componentDidMount() {
+    this.showCurrentLocation()
+  }
+
   showCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
@@ -33,12 +39,8 @@ class CurrentLocation extends Component {
     }
   }
 
-  componentDidMount() {
-    this.showCurrentLocation()
-  }
-
   render() {
-    const Map = props => {
+    const Map = () => {
       return (
         <GoogleMap
           defaultZoom={10}
@@ -58,11 +60,12 @@ class CurrentLocation extends Component {
     }
 
     const WrapperMap = withScriptjs(withGoogleMap(Map))
+    const apiKey = process.env.GOOGLE_API_KEY
     console.log(this.state.precincts, 'POLICE')
     return (
       <div style={{width: '100vw', height: '100vh'}}>
         <WrapperMap
-          googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyASj7zn0ZFN0zPzzaO56qFYSmGgrZIWQ-I"
+          googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${apiKey}`}
           loadingElement={<div style={{height: `100%`}} />}
           containerElement={<div style={{height: `400px`}} />}
           mapElement={<div style={{height: `100%`}} />}
@@ -73,7 +76,7 @@ class CurrentLocation extends Component {
 }
 const mapState = state => {
   return {
-    precincts: state.precincts
+    precincts: state.policeLocation.precincts
   }
 }
 
