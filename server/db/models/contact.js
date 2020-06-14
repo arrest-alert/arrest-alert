@@ -11,7 +11,6 @@ const Contact = db.define('contact', {
   },
   contactName: {
     type: Sequelize.STRING,
-    allowNull: false
   },
   message: {
     type: Sequelize.TEXT,

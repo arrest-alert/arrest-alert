@@ -9,6 +9,7 @@ const db = require('./db')
 const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 3000
 const app = express()
+const listenForAlerts = require('./api/messages')
 const socketio = require('socket.io')
 module.exports = app
 
@@ -92,7 +93,14 @@ const createApp = () => {
     console.error(err.stack)
     res.status(err.status || 500).send(err.message || 'Internal server error.')
   })
+
+  setInterval(listenForAlerts, 10000)
+  // startWorkerLoop()
 }
+
+// function startWorkerLoop() {
+  // listenForAlerts()
+// }
 
 const startListening = () => {
   // start listening (and create a 'server' object representing our server)
