@@ -72,7 +72,7 @@ class CurrentLocation extends Component {
         latitude: this.props.precincts[0].geometry.location.lat,
         longitude: this.props.precincts[0].geometry.location.lng
       },
-      5000
+      800
     )
   }
 
