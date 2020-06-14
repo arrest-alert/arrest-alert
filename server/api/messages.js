@@ -20,43 +20,33 @@ function anonymous(location) {
 }
 
 function listenForAlerts() {
-  //let t = true
-  //while (t) {
     // get time
     let past = new Date()
     past.setMinutes(past.getMinutes() - 1)
 
 
-    let alerts = Alert.findAll({
+    Alert.findAll({
       attributes: ["id", "userId", "location"],
       where: {
         status: 'pending',
         createdAt: {[Op.lte]: past}
       }
     }).then(a => a.forEach(triggerMessageSend))
-    console.log('ALERTS =>', alerts)
-    //alerts.forEach(triggerMessageSend)
-
-    //sleep(60000)
-  //}
 }
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+
 
 function triggerMessageSend(row) {
   // get contacts from db
-  console.log("Row => ", row)
-  console.log("Row USER ID => ", row.userId)
-  let name = User.findOne({attributes: ['fullName'], where: {Id: row.userId}})
-  let contacts = Contact.findAll({attributes: ['number', 'message'], where: {userId: row.userId}})
+  var name
+  User.findOne({attributes: ['fullName'], where: {id: row.userId}}).then(x => {name = x.fullName})
+  Contact.findAll({attributes: ['number', 'message'], where: {userId: row.userId}})
   .then(c => c.forEach(contact => {
-    let message = contact.message + "name: " + name + "\nlocation: " + row.location
+    let message = contact.message + "\nname: " + name + "\nlocation: " + row.location
     send(contact.number, message)
+    // console.log("MESSAGE => ", message)
   }))
-  Alert.update({status: 'sent', where: {id: row.id}})
-
+  Alert.update({status: 'sent'}, {where: {id: row.id}}).then(x => x)
 }
 
 // helper function to actually send the message

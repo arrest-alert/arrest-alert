@@ -34,13 +34,13 @@ async function seed() {
       message:
         "Hey Michelle, this is Cody Tester. I'm in jail, please come help!"
     }),
-    Contact.create({
-      number: '+12126040450',
-      contactName: 'Cynthia',
-      userId: 1,
-      message:
-        "Hey Cynthia, this is Cody Tester. I'm in jail, please come help!"
-    })
+    // Contact.create({
+    //   number: '+12126040450',
+    //   contactName: 'Cynthia',
+    //   userId: 1,
+    //   message:
+    //     "Hey Cynthia, this is Cody Tester. I'm in jail, please come help!"
+    // })
   ])
 
   const alert = await Promise.all([
