@@ -48,8 +48,9 @@ form div {
   display: inline-block;
 }
 h2,
-h3,
+.nav-a,
 button,
+button.edit,
 nav a {
   color: red;
   font-size: 16px;
@@ -59,7 +60,8 @@ button:hover,
 nav a:hover {
   color: #0f0f0f;
 }
-button {
+button,
+.nav-a {
   font-family: 'Roboto Mono', monospace;
   font-weight: 600;
   border: none;
@@ -69,4 +71,22 @@ h4 {
   font-size: 20px;
 }
 .contacts a {
+}
+h3 {
+  color: #000;
+  font-size: 20px;
+}
+.contacts h2 {
+  color: #000;
+}
+.acct-details {
+  color: #000;
+}
+button.edit {
+  font-size: 14px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+.name {
+  font-size: 20px;
 }
