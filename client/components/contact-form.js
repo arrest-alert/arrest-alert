@@ -6,7 +6,16 @@ export class Contacts extends Component {
   constructor(props) {
     super(props)
     this.state = this.props.fetchContacts(this.props.user)
+    this.state.buttonClick = false
   }
+
+  handleClick = () => {
+    this.setState({
+      buttonClick: !this.state.buttonClick
+    })
+    console.log('this.state.buttonCLICK =>', this.state.buttonClick)
+  }
+
   render() {
     let contacts = this.props.contacts
 
@@ -23,6 +32,9 @@ export class Contacts extends Component {
             </div>
           ))}
         </div>
+        <button type="button" onClick={this.handleClick}>
+          Add
+        </button>
       </div>
     )
   }
