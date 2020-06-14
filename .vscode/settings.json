@@ -1,0 +1,7 @@
+{
+  "liveServer.settings.port": 5504,
+  "extensions.ignoreRecommendations": true,
+  "files.autoSave": "off",
+  "debug.allowBreakpointsEverywhere": true
+  // "debug.allowBreakpointsEverywhere": true
+}
