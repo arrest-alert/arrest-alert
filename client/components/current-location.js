@@ -79,20 +79,24 @@ class CurrentLocation extends Component {
   render() {
     const Map = () => {
       return (
-        <GoogleMap
-          defaultZoom={10}
-          defaultCenter={{
-            lat: this.state.currentLatLng.lat,
-            lng: this.state.currentLatLng.lng
-          }}
-        >
-          <Marker
-            position={{
+        <div>
+          <GoogleMap
+            defaultZoom={10}
+            defaultCenter={{
               lat: this.state.currentLatLng.lat,
               lng: this.state.currentLatLng.lng
             }}
-          />
-        </GoogleMap>
+          >
+            <Marker
+              position={{
+                lat: this.state.currentLatLng.lat,
+                lng: this.state.currentLatLng.lng
+              }}
+            />
+          </GoogleMap>
+
+          <h2>Your Location is Now Being Tracked! Stay Safe!</h2>
+        </div>
       )
     }
 
