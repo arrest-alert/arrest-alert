@@ -1,6 +1,6 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { updateEmail, updateName } from '../store/user'
+import {connect} from 'react-redux'
+import {updateEmail, updateName} from '../store/user'
 
 export class UserInfo extends React.Component {
   constructor(props) {
@@ -66,10 +66,8 @@ export class UserInfo extends React.Component {
             <div key={user.id}>
               <br />
               <h2 className="acct-details">
-                <div>Name</div>{' '}
-                <div>
-                  {user.fullName}
-                </div>{' '}
+                <div className="name-header">Name</div>{' '}
+                <div className="name">{user.fullName}</div>{' '}
                 <button
                   type="button"
                   onClick={this.toggleName}
@@ -94,7 +92,8 @@ export class UserInfo extends React.Component {
                 ) : null}
               </h2>
               <h2 className="acct-details">
-                <div>Email</div> <div>{user.email}</div>{' '}
+                <div className="name-header">Email</div>{' '}
+                <div className="name">{user.email}</div>{' '}
                 <button
                   type="button"
                   onClick={this.toggleEmail}

@@ -1,5 +1,28 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: sans-serif;
+  /* font-family: 'Roboto', sans-serif; */
+  font-family: 'Roboto Mono', monospace;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.container {
+  height: 100vh;
+  width: 70vw;
+  border: none;
+  display: flex;
+  border: 10px solid black;
+}
+.innerContainer {
+  width: 40vw;
+  height: 40vh;
+  border: 10px solid black;
+  border-radius: 50px;
 }
 
 a {
@@ -18,4 +41,68 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+}
+h2,
+.nav-a,
+button,
+button.edit,
+nav a {
+  color: red;
+  font-size: 16px;
+}
+h2:hover,
+button:hover,
+nav a:hover {
+  color: #0f0f0f;
+  border: none;
+}
+button,
+.nav-a {
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 600;
+  border: none;
+  font-size: 12px;
+  background: white;
+}
+h4 {
+  font-size: 25px;
+}
+.contacts a {
+}
+h3 {
+  color: #000;
+  font-size: 20px;
+}
+.contacts h2 {
+  color: #000;
+}
+.acct-details {
+  color: #000;
+}
+button.edit {
+  font-size: 14px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+.name {
+  font-size: 20px;
+}
+.name-header {
+  font-weight: lighter;
+}
+
+h4 {
+  padding-top: 20px;
+  border-top: 0.5px solid rgba(0, 0, 0, 0.7);
+}
+.contact-name {
+  font-weight: 600;
+  padding-top: 10px;
+}
+p {
+  line-height: 0.75em;
+}
+
+button:focus {
+  outline: 0;
 }

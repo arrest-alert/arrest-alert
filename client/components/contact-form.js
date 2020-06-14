@@ -21,12 +21,12 @@ export class Contacts extends Component {
 
     console.log('CONTACTS => ', contacts)
     return (
-      <div>
-        <h1>Your Contacts</h1>
+      <div className="contacts">
+        <h4>Your Contacts</h4>
         <div>
           {contacts.contacts.map(contact => (
             <div key={contact.contactName}>
-              <p>{contact.contactName}</p>
+              <p className="contact-name">{contact.contactName}</p>
               <p>{contact.number}</p>
               <p>{contact.message}</p>
             </div>
