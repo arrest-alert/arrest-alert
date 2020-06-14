@@ -26,6 +26,7 @@ export const getPoliceLocation = coordinates => {
   }
 }
 
+//
 const initialState = {
   precincts: []
 }

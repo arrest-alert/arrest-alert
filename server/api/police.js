@@ -1,17 +1,29 @@
 const router = require('express').Router()
-const {User} = require('../db/models')
+const {User, Alert} = require('../db/models')
 module.exports = router
 
-router.post('/', async (req, res, next) => {
+//checks for current "pending" status
+router.get('/:userId', async (req, res, next) => {
   try {
-    locationName = req.body.name
-    userId = req.session.passport.user
-    const users = await User.One({
-      where: {
-        id: userId
-      }
+    const id = req.session.passport.user
+    const currentUser = await User.findByPk(id)
+    const alert = await currentUser.getAlerts({
+      where: {status: 'pending'}
     })
-    res.json(users)
+    res.json(alert)
+  } catch (err) {
+    next(err)
+  }
+})
+
+//new alert post to database if there is not one currently pending
+router.post('/:userId', async (req, res, next) => {
+  try {
+    const newAlert = await Alert.create({
+      userId: req.params.userId,
+      location: req.body.location
+    })
+    res.json(newAlert)
   } catch (err) {
     next(err)
   }
