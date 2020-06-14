@@ -2,6 +2,10 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getPoliceLocation} from '../store/police-locations'
 import {withScriptjs, withGoogleMap, GoogleMap, Marker} from 'react-google-maps'
+import {isPointWithinRadius} from 'geolib'
+import axios from 'axios'
+import store from '../store'
+import {CallContext} from 'twilio/lib/rest/api/v2010/account/call'
 require('../../secrets')
 
 class CurrentLocation extends Component {
@@ -12,31 +16,64 @@ class CurrentLocation extends Component {
         lat: 0,
         lng: 0
       },
-      isMarkerShown: false,
-      precincts: []
+      isMarkerShown: false
     }
+    this.sendArrestAlert = this.sendArrestAlert.bind(this)
+    this.showCurrentLocation = this.showCurrentLocation.bind(this)
+    this.amIArrested = this.amIArrested.bind(this)
   }
 
   componentDidMount() {
     this.showCurrentLocation()
   }
+  componentDidUpdate() {
+    const result = this.amIArrested()
+    this.sendArrestAlert(result)
+  }
 
   showCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
-        this.setState({
+        this.setState(prevState => ({
           currentLatLng: {
-            // ...prevState.currentLatLng,
+            ...prevState.currentLatLng,
             lat: position.coords.latitude,
             lng: position.coords.longitude
           },
           isMarkerShown: true
-        })
+        }))
         this.props.getPoliceLocation(this.state.currentLatLng)
       })
     } else {
       console.log('error:location not found')
     }
+  }
+
+  sendArrestAlert = boolean => {
+    if (boolean) {
+      const state = store.getState()
+      const userId = state.user.id
+      axios.post(`/api/police/${userId}`, {
+        location: this.props.precincts[0].name
+      })
+    }
+  }
+
+  amIArrested = () => {
+    if (!this.props.precincts[0]) {
+      return false
+    }
+    return isPointWithinRadius(
+      {
+        latitude: this.state.currentLatLng.lat,
+        longitude: this.state.currentLatLng.lng
+      },
+      {
+        latitude: this.props.precincts[0].geometry.location.lat,
+        longitude: this.props.precincts[0].geometry.location.lng
+      },
+      5000
+    )
   }
 
   render() {
@@ -61,7 +98,7 @@ class CurrentLocation extends Component {
 
     const WrapperMap = withScriptjs(withGoogleMap(Map))
     const apiKey = process.env.GOOGLE_API_KEY
-    console.log(this.state.precincts, 'POLICE')
+
     return (
       <div style={{width: '100vw', height: '100vh'}}>
         <WrapperMap

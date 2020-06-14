@@ -8,7 +8,9 @@ const Alert = db.define('alert', {
     allowNull: false
   },
   status: {
-    type: Sequelize.ENUM('pending', 'sent', 'cancelled')
+    type: Sequelize.ENUM('pending', 'sent', 'cancelled'),
+    defaultValue: 'pending',
+    allowNull: false
   }
 })
 
