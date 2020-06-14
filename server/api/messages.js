@@ -1,7 +1,9 @@
 const router = require('express').Router()
-const {User, Contact} = require('../db/models')
+const {User, Contact, Alert} = require('../db/models')
 require('../../secrets')
 const {Op} = require('sequelize')
+
+const phoneNum = process.env.phoneNum
 
 const authToken = process.env.TwilioAuthToken
 const accountSid = process.env.TwilioAccountSid
@@ -16,33 +18,35 @@ function anonymous(location) {
     })
     .then(message => console.log(message.sid))
 }
-let t = true
-while (t) {
-  // get time
-  let past = Date.now()
-  past.setMinutes(past.getMinutes() - 10)
 
-  alert.findAll({
-    where: {
-      status: pending,
-      createdAt: {[Op.lte]: past}
-    }
-  })
+function listenForAlerts() {
+    // get time
+    let past = new Date()
+    past.setMinutes(past.getMinutes() - 1)
 
-  // query database for pending entries with timestamp <= current time - 10 mins
-  // for each expired pending entry:
-  //   call triggerMessageSend
-  // sleep 1 min
+
+    Alert.findAll({
+      attributes: ["id", "userId", "location"],
+      where: {
+        status: 'pending',
+        createdAt: {[Op.lte]: past}
+      }
+    }).then(a => a.forEach(triggerMessageSend))
 }
 
-function triggerMessageSend(userID, location) {
+
+
+function triggerMessageSend(row) {
   // get contacts from db
-  // append location to message
-  // append name to message
-  // for each contact:
-  //    get message
-  //    get number
-  //    call 'send' helper function
+  var name
+  User.findOne({attributes: ['fullName'], where: {id: row.userId}}).then(x => {name = x.fullName})
+  Contact.findAll({attributes: ['number', 'message'], where: {userId: row.userId}})
+  .then(c => c.forEach(contact => {
+    let message = contact.message + "\nname: " + name + "\nlocation: " + row.location
+    send(contact.number, message)
+    // console.log("MESSAGE => ", message)
+  }))
+  Alert.update({status: 'sent'}, {where: {id: row.id}}).then(x => x)
 }
 
 // helper function to actually send the message
@@ -50,10 +54,10 @@ function send(to, body) {
   client.messages
     .create({
       body,
-      from: '+12019285464',
+      from: phoneNum,
       to
     })
     .then(message => console.log(message.sid))
 }
 
-module.exports = router
+module.exports = listenForAlerts

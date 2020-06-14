@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Contact} = require('../server/db/models')
+const {User, Contact, Alert} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -34,14 +34,28 @@ async function seed() {
       message:
         "Hey Michelle, this is Cody Tester. I'm in jail, please come help!"
     }),
-    Contact.create({
-      number: '+12126040450',
-      contactName: 'Cynthia',
-      userId: 1,
-      message:
-        "Hey Cynthia, this is Cody Tester. I'm in jail, please come help!"
+    // Contact.create({
+    //   number: '+12126040450',
+    //   contactName: 'Cynthia',
+    //   userId: 1,
+    //   message:
+    //     "Hey Cynthia, this is Cody Tester. I'm in jail, please come help!"
+    // })
+  ])
+
+  const alert = await Promise.all([
+    Alert.create({
+      location: 'precinct 1',
+      status: 'pending',
+      userId: 1
     })
   ])
+
+  // const alert1 = await Alert.findOne({
+  //   where: {
+  //     location: 'precinct 1'
+  //   }
+  // })
 
   // const contact1 = await Contact.findOne({
   //   where: {
@@ -57,6 +71,7 @@ async function seed() {
 
   // await contact1.addUser("Cody Smith")
   // await contact2.addUser("Cody Smith")
+  // await alert1.addUser("Cody Smith")
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded ${contact.length} contacts`)
