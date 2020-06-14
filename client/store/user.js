@@ -37,7 +37,6 @@ export const me = () => async dispatch => {
   }
 }
 
-
 export const updateName = (userId, fullName) => async dispatch => {
   try {
     const res = await axios.put(`/api/users/${userId}`, fullName)
@@ -56,8 +55,7 @@ export const updateEmail = (userId, email) => async dispatch => {
   }
 }
 
-export const auth = (email, password, fullName, method) => async dispatch => {
-
+export const auth = (email, password, method) => async dispatch => {
   let res
   try {
     res = await axios.post(`/auth/${method}`, {email, password})
@@ -94,7 +92,8 @@ export default function(state = defaultUser, action) {
       return defaultUser
     case UPDATED_NAME:
       return {
-        ...state, fullName: action.fullName.fullName
+        ...state,
+        fullName: action.fullName.fullName
       }
     case UPDATED_EMAIL:
       return {...state, email: action.email.email}
