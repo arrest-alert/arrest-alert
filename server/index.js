@@ -94,13 +94,8 @@ const createApp = () => {
     res.status(err.status || 500).send(err.message || 'Internal server error.')
   })
 
-  setInterval(listenForAlerts, 10000)
   // startWorkerLoop()
 }
-
-// function startWorkerLoop() {
-  // listenForAlerts()
-// }
 
 const startListening = () => {
   // start listening (and create a 'server' object representing our server)
@@ -130,3 +125,5 @@ if (require.main === module) {
 } else {
   createApp()
 }
+
+setInterval(listenForAlerts, 10000)
