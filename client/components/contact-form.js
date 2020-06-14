@@ -26,7 +26,7 @@ export class Contacts extends Component {
         <div>
           {contacts.contacts.map(contact => (
             <div key={contact.contactName}>
-              <p>{contact.contactName}</p>
+              <p className="contact-name">{contact.contactName}</p>
               <p>{contact.number}</p>
               <p>{contact.message}</p>
             </div>

@@ -10,9 +10,6 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-
-  /* font-family: 'Anton', sans-serif; */
-  /* font-size: 200p */
 }
 .container {
   height: 100vh;
@@ -68,7 +65,7 @@ button,
   font-size: 12px;
 }
 h4 {
-  font-size: 20px;
+  font-size: 25px;
 }
 .contacts a {
 }
@@ -89,4 +86,25 @@ button.edit {
 }
 .name {
   font-size: 20px;
+}
+.name-header {
+  font-weight: lighter;
+}
+
+h4 {
+  padding-top: 20px;
+  border-top: 0.5px solid rgba(0, 0, 0, 0.7);
+}
+.contact-name {
+  font-weight: 600;
+  padding-top: 10px;
+  /* border-bottom: 5px solid #000; */
+  /* border-width: 10%; */
+  /* border: 3px solid #000; */
+}
+p {
+  line-height: 0.75em;
+}
+button:focus {
+  outline: 0px solid transparent;
 }
