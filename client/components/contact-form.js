@@ -1,12 +1,18 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchContacts} from '../store/contacts'
+import {fetchContacts, putContact} from '../store/contacts'
+import {number} from 'prop-types'
 
 export class Contacts extends Component {
   constructor(props) {
     super(props)
     this.state = this.props.fetchContacts(this.props.user)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
     this.state.buttonClick = false
+    this.state.contactName = ''
+    this.state.number = ''
+    this.state.message = ''
   }
 
   handleClick = () => {
@@ -16,9 +22,34 @@ export class Contacts extends Component {
     console.log('this.state.buttonCLICK =>', this.state.buttonClick)
   }
 
+  handleSubmit = evt => {
+    evt.preventDefault()
+    let contactInfo = {
+      message: this.state.message,
+      contactName: this.state.contactName,
+      number: this.state.number
+    }
+    let userId = this.props.user
+    console.log('Contact Info => ', contactInfo)
+    this.props.putContact(userId, contactInfo)
+    this.setState({
+      message: '',
+      contactName: '',
+      number: '',
+      buttonClick: false
+    })
+  }
+
+  handleChange(event) {
+    console.log('STATE', this.state)
+    console.log('EVENT', event)
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
+
   render() {
     let contacts = this.props.contacts
-
     console.log('CONTACTS => ', contacts)
     return (
       <div className="contacts">
@@ -35,6 +66,43 @@ export class Contacts extends Component {
         <button type="button" onClick={this.handleClick}>
           Add
         </button>
+        {this.state.buttonClick ? (
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              Name:
+              <input
+                type="text"
+                name="contactName"
+                onChange={this.handleChange}
+                className="field"
+                value={this.state.contactName}
+              />
+            </label>
+
+            <label>
+              Number:
+              <input
+                type="text"
+                name="number"
+                onChange={this.handleChange}
+                className="field"
+                value={this.state.number}
+              />
+            </label>
+
+            <label>
+              Custom Message (opt):
+              <input
+                type="text"
+                name="message"
+                onChange={this.handleChange}
+                className="field"
+                value={this.state.message}
+              />
+            </label>
+            <button type="submit">Submit</button>
+          </form>
+        ) : null}
       </div>
     )
   }
@@ -48,7 +116,9 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    fetchContacts: userId => dispatch(fetchContacts(userId))
+    fetchContacts: userId => dispatch(fetchContacts(userId)),
+    putContact: (userId, contactInfo) =>
+      dispatch(putContact(userId, contactInfo))
   }
 }
 
