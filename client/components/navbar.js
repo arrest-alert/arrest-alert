@@ -16,7 +16,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
             Logout
           </a>
           <Link to="/location">
-            <h2>Location</h2>
+            <h2>Tack Your Location</h2>
           </Link>
         </div>
       ) : (
