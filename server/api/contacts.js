@@ -37,3 +37,14 @@ router.post('/:userId', async (req, res, next) => {
     next(error)
   }
 })
+
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const id = req.session.passport.user
+    const currentUser = await User.findByPk(id)
+    await currentUser.removeContact(req.params.id)
+    res.sendStatus(204)
+  } catch (error) {
+    next(error)
+  }
+})

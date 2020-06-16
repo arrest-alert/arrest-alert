@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchContacts, putContact} from '../store/contacts'
+import {fetchContacts, putContact, removeContact} from '../store/contacts'
 import {number} from 'prop-types'
 
 export class Contacts extends Component {
@@ -48,6 +48,10 @@ export class Contacts extends Component {
     })
   }
 
+  handleRemove = contactId => {
+    this.props.removeContact(contactId)
+  }
+
   render() {
     let contacts = this.props.contacts
     console.log('CONTACTS => ', contacts)
@@ -60,6 +64,12 @@ export class Contacts extends Component {
               <p className="contact-name">{contact.contactName}</p>
               <p>{contact.number}</p>
               <p>{contact.message}</p>
+              <button
+                type="button"
+                onClick={() => this.handleRemove(contact.id)}
+              >
+                <p>remove</p>
+              </button>
             </div>
           ))}
         </div>
@@ -118,7 +128,8 @@ const mapDispatch = dispatch => {
   return {
     fetchContacts: userId => dispatch(fetchContacts(userId)),
     putContact: (userId, contactInfo) =>
-      dispatch(putContact(userId, contactInfo))
+      dispatch(putContact(userId, contactInfo)),
+    removeContact: contactId => dispatch(removeContact(contactId))
   }
 }
 
