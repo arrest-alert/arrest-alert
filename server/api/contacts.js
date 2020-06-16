@@ -18,7 +18,6 @@ router.get('/:userId', async (req, res, next) => {
 
 router.post('/:userId', async (req, res, next) => {
   try {
-    console.log('REQ BODY=>', req.body)
     if (req.body.message) {
       await Contact.create({
         contactName: req.body.contactName,

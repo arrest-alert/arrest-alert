@@ -29,6 +29,7 @@ export function putContact(userId, newContact) {
   return async dispatch => {
     try {
       const {data} = await axios.post(`/api/contacts/${userId}`, newContact)
+      console.log('ADD THUNK DATA =>', data)
       dispatch(addContact(data))
     } catch (error) {
       console.error(error)
@@ -39,6 +40,7 @@ export function putContact(userId, newContact) {
 export function removeContact(contactId) {
   return async dispatch => {
     try {
+      console.log('THUNK CONTACTID =>', contactId)
       const {data} = await axios.delete(`/api/contacts/${contactId}`)
       console.log('REMOVE THUNK DATA =>', data)
       dispatch(deleteContact(data))
@@ -59,6 +61,8 @@ export default function(state = {contacts: []}, action) {
         contacts: action.contacts
       }
     case ADD_CONTACT:
+      console.log('STATE.CONTACTS => ', state.contacts)
+      console.log('ACTION.CONTACT =>', action.newContact)
       return {
         ...state,
         contacts: state.contacts.push(action.newContact)

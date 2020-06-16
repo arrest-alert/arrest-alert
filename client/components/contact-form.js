@@ -13,13 +13,14 @@ export class Contacts extends Component {
     this.state.contactName = ''
     this.state.number = ''
     this.state.message = ''
+    this.state.edit = false
+    this.state.activeEdit = false
   }
 
   handleClick = () => {
     this.setState({
       buttonClick: !this.state.buttonClick
     })
-    console.log('this.state.buttonCLICK =>', this.state.buttonClick)
   }
 
   handleSubmit = evt => {
@@ -41,34 +42,63 @@ export class Contacts extends Component {
   }
 
   handleChange(event) {
-    console.log('STATE', this.state)
-    console.log('EVENT', event)
     this.setState({
       [event.target.name]: event.target.value
     })
   }
 
   handleRemove = contactId => {
+    console.log('contact ID =>', contactId)
     this.props.removeContact(contactId)
+  }
+
+  handleEdit = contactId => {
+    this.setState({
+      edit: !this.state.edit,
+      activeEdit: !this.state.activeEdit
+    })
   }
 
   render() {
     let contacts = this.props.contacts
-    console.log('CONTACTS => ', contacts)
     return (
       <div className="contacts">
         <h4>Your Contacts</h4>
         <div>
           {contacts.contacts.map(contact => (
             <div key={contact.contactName} className="contact-list">
-              <p className="contact-name">{contact.contactName}</p>
-              <p>{contact.number}</p>
-              <p className="message">{contact.message}</p>
+              <p
+                className={
+                  this.state.activeEdit
+                    ? 'contact-name edit-fields'
+                    : 'contact-name'
+                }
+                contentEditable={this.state.edit}
+              >
+                {contact.contactName}
+              </p>
+              <p
+                className={this.state.activeEdit ? 'edit-fields' : null}
+                contentEditable={this.state.edit}
+              >
+                {contact.number}
+              </p>
+              <p
+                className={
+                  this.state.activeEdit ? 'message edit-fields' : 'message'
+                }
+                contentEditable={this.state.edit}
+              >
+                {contact.message}
+              </p>
               <button
                 type="button"
                 onClick={() => this.handleRemove(contact.id)}
               >
                 <p>remove</p>
+              </button>
+              <button type="button" onClick={() => this.handleEdit(contact.id)}>
+                <p>edit</p>
               </button>
             </div>
           ))}
