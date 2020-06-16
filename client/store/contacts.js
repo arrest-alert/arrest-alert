@@ -40,6 +40,7 @@ export function removeContact(contactId) {
   return async dispatch => {
     try {
       const {data} = await axios.delete(`/api/contacts/${contactId}`)
+      console.log('REMOVE THUNK DATA =>', data)
       dispatch(deleteContact(data))
     } catch (error) {
       console.error(error)

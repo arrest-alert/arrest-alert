@@ -60,10 +60,10 @@ export class Contacts extends Component {
         <h4>Your Contacts</h4>
         <div>
           {contacts.contacts.map(contact => (
-            <div key={contact.contactName}>
+            <div key={contact.contactName} className="contact-list">
               <p className="contact-name">{contact.contactName}</p>
               <p>{contact.number}</p>
-              <p>{contact.message}</p>
+              <p className="message">{contact.message}</p>
               <button
                 type="button"
                 onClick={() => this.handleRemove(contact.id)}
@@ -113,6 +113,12 @@ export class Contacts extends Component {
             <button type="submit">Submit</button>
           </form>
         ) : null}
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
       </div>
     )
   }

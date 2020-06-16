@@ -13,15 +13,17 @@ body {
 }
 .container {
   height: 100vh;
+  max-height: 1236px;
   width: 70vw;
   border: none;
   display: flex;
-  border: 10px solid black;
+  /* border: 10px solid black; */
 }
 .innerContainer {
-  width: 40vw;
-  height: 40vh;
-  border: 10px solid black;
+  /* width: 40vw; */
+  /* height: 40vh; */
+  max-height: 1236px;
+  /* border: 10px solid black; */
   border-radius: 50px;
 }
 
@@ -49,6 +51,7 @@ button.edit,
 nav a {
   color: red;
   font-size: 16px;
+  cursor: pointer;
 }
 h2:hover,
 button:hover,
@@ -105,4 +108,15 @@ p {
 
 button:focus {
   outline: 0;
+}
+
+.contact-list {
+  border: 1px solid black;
+  margin: 5%;
+  padding: 2%;
+  border-radius: 20px;
+}
+
+.message {
+  line-height: 160%;
 }
